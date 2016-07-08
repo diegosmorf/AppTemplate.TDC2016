@@ -1,52 +1,44 @@
-﻿using System;
-using AppTemplate.TDC2016;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
-namespace LoginPattern
+namespace AppTemplate.TDC2016
 {
-	public class MenuPage : ContentPage
-	{
-		MasterDetailPage master;
+    public class MenuPage : ContentPage
+    {
+        public MenuPage()
+        {
+            Title = "TDC2016";
+            Icon = "slideout.png";
 
-		TableView tableView;
+            var section = new TableSection
+            {
+                new TextCell {Text = "Sessão"},
+                new TextCell {Text = "Palestrantes"},
+                new TextCell {Text = "Favoritos"},
+                new TextCell {Text = "Salas"},
+                new TextCell {Text = "Mapa"}
+            };
 
-		public MenuPage ()
-		{
-			Title = "TDC2016";
-			Icon = "slideout.png";
+            var root = new TableRoot {section};
 
-			var section = new TableSection () {
-				new TextCell {Text = "Sessão"},
-				new TextCell {Text = "Palestrantes"},
-				new TextCell {Text = "Favoritos"},
-				new TextCell {Text = "Salas"},
-				new TextCell {Text = "Mapa"},
-			};
+            var tableView = new TableView
+            {
+                Root = root,
+                Intent = TableIntent.Menu
+            };
 
-			var root = new TableRoot () {section} ;
+            var logoutButton = new Button {Text = "Sair"};
+            logoutButton.Clicked += (sender, e) => { App.Current.Logout(); };
 
-			tableView = new TableView ()
-			{ 
-				Root = root,
-				Intent = TableIntent.Menu,
-			};
-
-			var logoutButton = new Button { Text = "Sair" };
-			logoutButton.Clicked += (sender, e) => {
-				App.Current.Logout();
-			};
-
-			Content = new StackLayout {
-				BackgroundColor = Color.Gray,
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				Children = {
-					tableView, 
-					logoutButton
-				}
-			};
-		}
-
-
-	}
+            Content = new StackLayout
+            {
+                BackgroundColor = Color.Gray,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Children =
+                {
+                    tableView,
+                    logoutButton
+                }
+            };
+        }
+    }
 }
-
